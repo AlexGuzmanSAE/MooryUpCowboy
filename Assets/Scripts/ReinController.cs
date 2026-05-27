@@ -40,6 +40,8 @@ public class ReinController : MonoBehaviour
         float leftY = GetLeftY();
         float rightY = GetRightY();
 
+        
+
         bool leftUp = leftY > _leftPrevY;
         bool rightUp = rightY > _rightPrevY;
 

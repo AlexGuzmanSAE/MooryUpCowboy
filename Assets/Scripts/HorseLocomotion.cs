@@ -79,7 +79,7 @@ public class HorseLocomotion : MonoBehaviour
         if (headsetRotation == null) return;
 
         float turnThisFrame = headsetRotation.turnDegreesPerSecond * Time.deltaTime;
-        transform.Rotate(Vector3.up, turnThisFrame, Space.World);
+        transform.Rotate(Vector3.up, -turnThisFrame, Space.Self);
     }
 
     private void HandleMovement()

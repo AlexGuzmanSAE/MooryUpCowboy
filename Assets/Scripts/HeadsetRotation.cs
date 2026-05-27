@@ -7,7 +7,7 @@ public class HeadsetRotation : MonoBehaviour
 
     [Header("Zona muerta y sensibilidad")]
     [Range(0f, 30f)]
-    public float deadZoneDegrees = 15f;
+    public float deadZoneDegrees = 5f;
 
     [Range(30f, 90f)]
     public float maxHeadAngle = 60f;
@@ -19,7 +19,7 @@ public class HeadsetRotation : MonoBehaviour
 
     [HideInInspector] public float turnDegreesPerSecond;
 
-    private float _referenceYaw;  
+    private float _referenceRoll;  
     private float _smoothedTurn;
 
     private void Start()
@@ -27,35 +27,35 @@ public class HeadsetRotation : MonoBehaviour
         if (hmdTransform == null)
         {
             hmdTransform = Camera.main != null ? Camera.main.transform : transform;
-            Debug.LogWarning("[HeadsetRotation] hmdTransform no asignado, usando Camera.main.");
+            
         }
         RecalibrateForward();
     }
 
     private void Update()
     {
-        float currentYaw = hmdTransform.eulerAngles.y;
-        float deltaYaw = Mathf.DeltaAngle(_referenceYaw, currentYaw);
+        float currentRoll = hmdTransform.eulerAngles.z;
+        float deltaRoll = Mathf.DeltaAngle(_referenceRoll, currentRoll);
 
-        float absDelta = Mathf.Abs(deltaYaw);
+        float absDelta = Mathf.Abs(deltaRoll);
         float activeDelta = 0f;
         if (absDelta > deadZoneDegrees)
         {
-            activeDelta = Mathf.Sign(deltaYaw) *
+            activeDelta = Mathf.Sign(deltaRoll) *
                            Mathf.InverseLerp(deadZoneDegrees, maxHeadAngle, absDelta) *
                            maxTurnSpeed;
         }
-
         _smoothedTurn = Mathf.Lerp(activeDelta, _smoothedTurn, smoothing);
         turnDegreesPerSecond = _smoothedTurn;
+        Debug.Log("SmoothedTurn = " + _smoothedTurn + " current roll = " + currentRoll);
     }
 
     public void RecalibrateForward()
     {
         if (hmdTransform != null)
         {
-            _referenceYaw = hmdTransform.eulerAngles.y;
-            Debug.Log($"[HeadsetRotation] Forward recalibrado: {_referenceYaw:F1}°");
+            _referenceRoll = hmdTransform.eulerAngles.z;
+            Debug.Log($"[HeadsetRotation] Forward recalibrado: {_referenceRoll:F1}°");
         }
     }
 }
