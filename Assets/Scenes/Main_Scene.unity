@@ -963,7 +963,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e000fb4cf2c724999d74a2d8fe8430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::COW_IA
-  radius: 5.76
+  prefabForPoints: {fileID: 1362588716797900928, guid: 3769cabc603278e4784931b4b1bb25e6, type: 3}
+  collisionPoints: []
+  radius: 5.4
+  currentCowState: 0
 --- !u!1 &900374302
 GameObject:
   m_ObjectHideFlags: 0
@@ -2263,7 +2266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3851015956068934394, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4483999970917742656, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       propertyPath: m_LocalPosition.x
