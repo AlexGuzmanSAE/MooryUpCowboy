@@ -23,13 +23,13 @@ public class COW_IA : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
     }
 
     public void GenerateCircle()
+        //nightmare code, but it works
     {
         Collider[] hitColliders =  Physics.OverlapSphere(transform.position, radius);
         foreach (Collider collider in hitColliders)

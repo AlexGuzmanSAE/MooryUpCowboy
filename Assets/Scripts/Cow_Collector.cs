@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -22,10 +23,14 @@ public class Cow_Collector : MonoBehaviour
     private List<Vector3> positions = new List<Vector3>();
     private float timer;
 
+
+    // Events
+    public Action<int> colectionEvent;
+    //
+
     public void AddScore(int amount)
     {
-        cowsCollected += amount;
-        scoreTxt.text = "Score: " + scoreTxt;
+        colectionEvent?.Invoke(amount);
     }
 
     void Update()
@@ -104,5 +109,4 @@ public class Cow_Collector : MonoBehaviour
             }
         }
     }
-
 }
