@@ -37,7 +37,6 @@ public class COW_IA : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (currentCowState == cowStates.Idle)
@@ -153,8 +152,13 @@ public class COW_IA : MonoBehaviour
             ChoosePoint();
             Debug.Log("Corruitna");
         }
-          
+    }
+     
+    
+    void DestroyCow()
+    {
+
+    }
         
      
-    }
 }
