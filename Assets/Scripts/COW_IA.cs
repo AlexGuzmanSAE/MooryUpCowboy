@@ -10,6 +10,8 @@ public class COW_IA : MonoBehaviour
 
     public List<GameObject> collisionPoints = new List<GameObject>();
 
+    public Animator animator;
+
 
 
     public float radius;
@@ -29,18 +31,18 @@ public class COW_IA : MonoBehaviour
     void Start()
     {
         initialitePoints();
+        if(animator == null)
+        {
+            animator = GetComponent<Animator>();    
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ChoosePoint();
-        }
         if (currentCowState == cowStates.Idle)
         {
-            StartCoroutine(waitToChoosePoint());
+            StartCoroutine(waitToChooseAction());
         }
     }
 
@@ -119,24 +121,39 @@ public class COW_IA : MonoBehaviour
     private void MoveCowToPoint(Transform destinty)
     {
         currentCowState = cowStates.Moving;
+        animator.SetBool("IsWalking", true);
         Vector3 currentPos = transform.position;
         this.transform.LookAt(destinty.transform);
-        this.gameObject.transform.DOMove(destinty.position, 1.0f).OnComplete(() =>
+        this.gameObject.transform.DOMove(destinty.position, 2.5f).OnComplete(() =>
         {
             MovePointsCow();
             currentCowState = cowStates.Idle;
+            animator.SetBool("IsWalking", false);
 
         } );
 
     }
 
-    IEnumerator waitToChoosePoint()
+    IEnumerator waitToChooseAction()
     {
-       
+        int random = Random.Range(0, 11);
+        if(random < 7)
+        {
+            currentCowState = cowStates.Eat;
+            animator.SetBool("IsEating", true);
+            yield return new WaitForSeconds(Random.Range(4, 7));
+            animator.SetBool("IsEating", false);
+            currentCowState = cowStates.Idle;
+
+        }
+        else
+        {
             currentCowState = cowStates.Moving;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(Random.Range(4, 10));
             ChoosePoint();
             Debug.Log("Corruitna");
+        }
+          
         
      
     }
