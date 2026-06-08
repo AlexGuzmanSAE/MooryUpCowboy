@@ -17,7 +17,7 @@ public class CowGrabber : MonoBehaviour
     public InputActionReference triggerAction;
 
     [Header("Visual Feedback")]
-    public LineRenderer lineRenderer;
+    //public LineRenderer lineRenderer;
     public GameObject chargeIndicator; // UI de carga
 
     private float holdTimer = 0f;
@@ -69,8 +69,9 @@ public class CowGrabber : MonoBehaviour
         if (!isTriggerHeld) return;
 
         // Raycast
-        Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
+        Ray ray = new Ray(rayOrigin.position, rayOrigin.forward * 50);
         bool hitCow = Physics.Raycast(ray, out RaycastHit hit, rayDistance, cowLayer);
+
 
         if (hitCow)
         {
@@ -89,7 +90,7 @@ public class CowGrabber : MonoBehaviour
             if (holdTimer >= requiredHoldTime && !isCharged)
             {
                 isCharged = true;
-                // Feedback háptico al completar carga
+                // Feedback haptico al completar carga
                 TriggerHaptic(0.8f, 0.2f);
                 Debug.Log("¡Cargado! Suelta para agarrar la vaca.");
             }
@@ -106,13 +107,13 @@ public class CowGrabber : MonoBehaviour
 
     void UpdateLineRenderer(bool active, Vector3 endPoint)
     {
-        if (!lineRenderer) return;
-        lineRenderer.enabled = active;
-        if (active)
-        {
-            lineRenderer.SetPosition(0, rayOrigin.position);
-            lineRenderer.SetPosition(1, endPoint);
-        }
+        //if (!lineRenderer) return;
+        //lineRenderer.enabled = active;
+        //if (active)
+        //{
+        //    lineRenderer.SetPosition(0, rayOrigin.position);
+        //    lineRenderer.SetPosition(1, endPoint);
+        //}
     }
 
     void TriggerHaptic(float amplitude, float duration)
