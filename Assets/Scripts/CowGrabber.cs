@@ -1,3 +1,4 @@
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -17,13 +18,15 @@ public class CowGrabber : MonoBehaviour
     public InputActionReference triggerAction;
 
     [Header("Visual Feedback")]
-    //public LineRenderer lineRenderer;
+    public LineRenderer lineRenderer;
     public GameObject chargeIndicator; // UI de carga
 
     private float holdTimer = 0f;
     private bool isTriggerHeld = false;
     private bool isCharged = false;
     private Cow_Info targetCow = null;
+
+    private Vector3[] renderPos;
 
     void OnEnable()
     {
@@ -68,13 +71,17 @@ public class CowGrabber : MonoBehaviour
     {
         if (!isTriggerHeld) return;
 
+
         // Raycast
         Ray ray = new Ray(rayOrigin.position, rayOrigin.forward * 50);
         bool hitCow = Physics.Raycast(ray, out RaycastHit hit, rayDistance, cowLayer);
 
+        renderPos[0] = transform.position;
+        renderPos[1] = hit.collider.gameObject.transform.position;
 
         if (hitCow)
         {
+            lineRenderer.SetPositions(renderPos);
             targetCow = hit.collider.GetComponent<Cow_Info>();
             UpdateLineRenderer(true, hit.point);
 
