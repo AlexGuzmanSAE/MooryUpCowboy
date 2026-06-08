@@ -965,6 +965,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::COW_IA
   prefabForPoints: {fileID: 1362588716797900928, guid: 3769cabc603278e4784931b4b1bb25e6, type: 3}
   collisionPoints: []
+  animator: {fileID: 0}
   radius: 5.4
   currentCowState: 0
 --- !u!1 &900374302
@@ -6433,6 +6434,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5463634406018912992}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1001 &8118171034939488261
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1795150881540003327, guid: e035b1ca02b2c264785566ab794ee963, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.2196906
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795150881540003327, guid: e035b1ca02b2c264785566ab794ee963, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2987
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795150881540003327, guid: e035b1ca02b2c264785566ab794ee963, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795150881540003327, guid: e035b1ca02b2c264785566ab794ee963, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795150881540003327, guid: e035b1ca02b2c264785566ab794ee963, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795150881540003327, guid: e035b1ca02b2c264785566ab794ee963, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795150881540003327, guid: e035b1ca02b2c264785566ab794ee963, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795150881540003327, guid: e035b1ca02b2c264785566ab794ee963, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795150881540003327, guid: e035b1ca02b2c264785566ab794ee963, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795150881540003327, guid: e035b1ca02b2c264785566ab794ee963, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7501870923141646587, guid: e035b1ca02b2c264785566ab794ee963, type: 3}
+      propertyPath: m_Name
+      value: sci-fi gun
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e035b1ca02b2c264785566ab794ee963, type: 3}
 --- !u!23 &8147611884563911199
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6616,3 +6674,4 @@ SceneRoots:
   - {fileID: 1550642537}
   - {fileID: 1183291378}
   - {fileID: 2106878229}
+  - {fileID: 8118171034939488261}
