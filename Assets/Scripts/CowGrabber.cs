@@ -89,6 +89,7 @@ public class CowGrabber : MonoBehaviour
             if (holdTimer >= requiredHoldTime && !isCharged)
             {
                 isCharged = true;
+                // Feedback háptico al completar carga
                 TriggerHaptic(0.8f, 0.2f);
                 Debug.Log("¡Cargado! Suelta para agarrar la vaca.");
             }
@@ -97,7 +98,7 @@ public class CowGrabber : MonoBehaviour
         {
             // Perdiste el objetivo
             targetCow = null;
-            holdTimer = Mathf.Max(0, holdTimer - Time.deltaTime * 2f); 
+            holdTimer = Mathf.Max(0, holdTimer - Time.deltaTime * 2f); // se descarga más rápido
             UpdateLineRenderer(true, rayOrigin.position + rayOrigin.forward * rayDistance);
             if (chargeIndicator) chargeIndicator.SetActive(false);
         }
@@ -116,6 +117,7 @@ public class CowGrabber : MonoBehaviour
 
     void TriggerHaptic(float amplitude, float duration)
     {
+        // XR Interaction Toolkit haptics
         var device = GetComponent<XRBaseController>();
         if (device != null)
             device.SendHapticImpulse(amplitude, duration);
