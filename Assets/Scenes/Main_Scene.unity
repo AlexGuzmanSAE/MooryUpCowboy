@@ -778,6 +778,7 @@ MonoBehaviour:
   rayOrigin: {fileID: 2075511704}
   requiredHoldTime: 1.5
   triggerAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  lineRenderer: {fileID: 0}
   chargeIndicator: {fileID: 0}
 --- !u!120 &441087510
 LineRenderer:
@@ -829,8 +830,8 @@ LineRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Positions:
-  - {x: 0.16, y: 5.52, z: 43.35}
-  - {x: -14.33, y: 5.52, z: 43.35}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
