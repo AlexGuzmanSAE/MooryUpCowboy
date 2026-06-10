@@ -26,7 +26,7 @@ public class CharacterMovement : MonoBehaviour
        if( leftHand != null)
         {
             velocity = leftHand.action.ReadValue<Vector3>();
-            Debug.Log(velocity);
+            
         }
         else
         {
