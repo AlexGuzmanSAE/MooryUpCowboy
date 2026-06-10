@@ -152,7 +152,7 @@ public class COW_IA : MonoBehaviour
 
     public void DestroyCow()
     {
-        Debug.Log("¡Vaca abducida! +100 puntos");
+        Debug.Log("¡Vaca abducida! +100 puntos e");
         Destroy(gameObject);
     }
 }
