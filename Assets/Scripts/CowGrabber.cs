@@ -1,32 +1,26 @@
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class CowGrabber : MonoBehaviour
 {
+    [Header("VR Setup")]
+    public Transform vrCamera; // OBLIGATORIO: Arrastra tu Main Camera de XR aquí
+
     [Header("Raycast")]
     public float rayDistance = 10f;
     public LayerMask cowLayer;
-    public Transform rayOrigin; // punta del controlador
-
-    [Header("Hold Settings")]
-    public float requiredHoldTime = 1.5f; // segundos para cargar
+    public Transform rayOrigin; // Punta del controlador
 
     [Header("Input Action")]
     public InputActionReference triggerAction;
 
     [Header("Visual Feedback")]
     public LineRenderer lineRenderer;
-    public GameObject chargeIndicator; // UI de carga
 
-    private float holdTimer = 0f;
     private bool isTriggerHeld = false;
-    private bool isCharged = false;
-    private Cow_Info targetCow = null;
-
-    private Vector3[] renderPos;
+    private COW_IA grabbedCow = null; // Cambiado a COW_IA
+    private Vector3[] renderPos = new Vector3[2];
 
     void OnEnable()
     {
@@ -45,87 +39,91 @@ public class CowGrabber : MonoBehaviour
     void OnTriggerPressed(InputAction.CallbackContext ctx)
     {
         isTriggerHeld = true;
-        holdTimer = 0f;
-        isCharged = false;
     }
 
     void OnTriggerReleased(InputAction.CallbackContext ctx)
     {
         isTriggerHeld = false;
 
-        // Solo agarra si estaba cargado Y apuntando a una vaca
-        if (isCharged && targetCow != null)
+        // Si suelta el gatillo y tenía una vaca, la suelta
+        if (grabbedCow != null)
         {
-            targetCow.GetGrabbed(transform);
+            grabbedCow.transform.SetParent(null); // La vaca queda libre
+            grabbedCow.currentCowState = COW_IA.cowStates.Idle; // Vuelve a la normalidad
+            grabbedCow = null;
         }
 
-        // Reset
-        holdTimer = 0f;
-        isCharged = false;
-        targetCow = null;
         UpdateLineRenderer(false, Vector3.zero);
-        if (chargeIndicator) chargeIndicator.SetActive(false);
     }
 
     void Update()
     {
-        if (!isTriggerHeld) return;
-
-
-        // Raycast
-        Ray ray = new Ray(rayOrigin.position, rayOrigin.forward * 50);
-        bool hitCow = Physics.Raycast(ray, out RaycastHit hit, rayDistance, cowLayer);
-
-
-        if (hitCow)
+        // 1. Lógica para abducir la vaca si ya está agarrada
+        if (grabbedCow != null)
         {
-            renderPos[0] = transform.position;
-            renderPos[1] = hit.collider.gameObject.transform.position;
-            lineRenderer.SetPositions(renderPos);
-            targetCow = hit.collider.GetComponent<Cow_Info>();
-            UpdateLineRenderer(true, hit.point);
+            // Vector desde tu cabeza hacia tu mano
+            Vector3 dirToHand = (rayOrigin.position - vrCamera.position).normalized;
 
-            // Acumular tiempo de carga
-            holdTimer += Time.deltaTime;
-            float progress = Mathf.Clamp01(holdTimer / requiredHoldTime);
+            // Si el producto punto es negativo, la mano está detrás de la cabeza
+            float dot = Vector3.Dot(vrCamera.forward, dirToHand);
 
-            if (chargeIndicator)
+            if (dot < -0.2f) // Un pequeño margen para que sea un gesto natural
             {
-                chargeIndicator.SetActive(true);
-            }
-
-            if (holdTimer >= requiredHoldTime && !isCharged)
-            {
-                isCharged = true;
-                // Feedback haptico al completar carga
-                TriggerHaptic(0.8f, 0.2f);
-                Debug.Log("¡Cargado! Suelta para agarrar la vaca.");
+                TriggerHaptic(1f, 0.5f); // Super vibración al absorberla
+                grabbedCow.DestroyCow();
+                grabbedCow = null;
+                UpdateLineRenderer(false, Vector3.zero);
+                return; // Cortamos el Update aquí
             }
         }
-        else
+
+        // 2. Lógica del Raycast si está presionando el gatillo pero no tiene vaca
+        if (isTriggerHeld && grabbedCow == null)
         {
-            // Perdiste el objetivo
-            targetCow = null;
-            holdTimer = Mathf.Max(0, holdTimer - Time.deltaTime * 2f); // se descarga más rápido
-            UpdateLineRenderer(true, rayOrigin.position + rayOrigin.forward * rayDistance);
-            if (chargeIndicator) chargeIndicator.SetActive(false);
+            Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
+            bool hitCow = Physics.Raycast(ray, out RaycastHit hit, rayDistance, cowLayer);
+
+            if (hitCow)
+            {
+                COW_IA targetCow = hit.collider.GetComponent<COW_IA>();
+
+                if (targetCow != null && targetCow.currentCowState != COW_IA.cowStates.Grabbed)
+                {
+                    // ¡La atrapamos inmediatamente!
+                    grabbedCow = targetCow;
+                    grabbedCow.GetGrabbed(rayOrigin);
+                    TriggerHaptic(0.5f, 0.1f);
+                }
+            }
+            else
+            {
+                UpdateLineRenderer(true, rayOrigin.position + rayOrigin.forward * rayDistance);
+            }
+        }
+
+        // 3. Actualizar la línea visual hacia la vaca si está agarrada
+        if (grabbedCow != null)
+        {
+            renderPos[0] = rayOrigin.position;
+            renderPos[1] = grabbedCow.transform.position;
+            lineRenderer.enabled = true;
+            lineRenderer.SetPositions(renderPos);
         }
     }
 
     void UpdateLineRenderer(bool active, Vector3 endPoint)
     {
-        //if (!lineRenderer) return;
-        //lineRenderer.enabled = active;
-        //if (active)
-        //{
-        //    lineRenderer.SetPosition(0, rayOrigin.position);
-        //    lineRenderer.SetPosition(1, endPoint);
-        //}
+        if (!lineRenderer) return;
+        lineRenderer.enabled = active;
+        if (active)
+        {
+            lineRenderer.SetPosition(0, rayOrigin.position);
+            lineRenderer.SetPosition(1, endPoint);
+        }
     }
 
     void TriggerHaptic(float amplitude, float duration)
     {
-        // XR Interaction Toolkit haptics
         var device = GetComponent<XRBaseController>();
         if (device != null)
             device.SendHapticImpulse(amplitude, duration);

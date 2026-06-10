@@ -3,48 +3,41 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 
-
 public class COW_IA : MonoBehaviour
 {
     public GameObject prefabForPoints;
-
     public List<GameObject> collisionPoints = new List<GameObject>();
-
     public Animator animator;
-
-
-
     public float radius;
-
 
     public enum cowStates
     {
         Idle,
         Eat,
         Moving,
-        Run
+        Run,
+        Grabbed
     }
 
     public cowStates currentCowState;
-
+    private bool isThinking = false;
 
     void Start()
     {
         initialitePoints();
-        if(animator == null)
+        if (animator == null)
         {
-            animator = GetComponent<Animator>();    
+            animator = GetComponent<Animator>();
         }
     }
 
     void Update()
     {
-        if (currentCowState == cowStates.Idle)
+        if (currentCowState == cowStates.Idle && !isThinking)
         {
             StartCoroutine(waitToChooseAction());
         }
     }
-
 
     private void OnDrawGizmos()
     {
@@ -57,13 +50,10 @@ public class COW_IA : MonoBehaviour
                 Gizmos.DrawSphere(pos.transform.position, 1.1f);
             }
         }
-
-
     }
 
     private void initialitePoints()
     {
-
         Vector3 currentPos = transform.position;
         for (int i = 0; i < 8; i++)
         {
@@ -78,8 +68,6 @@ public class COW_IA : MonoBehaviour
             GameObject newPoint = Instantiate(prefabForPoints, spawnPos, rot);
             collisionPoints.Add(newPoint);
         }
-       // StartCoroutine(waitToChoosePoint());
-
     }
 
     public void MovePointsCow()
@@ -87,7 +75,7 @@ public class COW_IA : MonoBehaviour
         if (collisionPoints.Count > 0)
         {
             Vector3 currentPos = transform.position;
-            float i = 0;
+            int i = 0;
             foreach (GameObject pos in collisionPoints)
             {
                 float angle = i * 45;
@@ -99,7 +87,6 @@ public class COW_IA : MonoBehaviour
                    );
                 i++;
                 Vector3 spawnPos = currentPos + spawnOffset;
-                Debug.Log(i);
                 pos.transform.position = spawnPos;
             }
         }
@@ -111,54 +98,61 @@ public class COW_IA : MonoBehaviour
         {
             int choose = Random.Range(0, collisionPoints.Count);
             Transform choose2 = collisionPoints[choose].transform;
-
             MoveCowToPoint(choose2);
         }
-
     }
 
     private void MoveCowToPoint(Transform destinty)
     {
         currentCowState = cowStates.Moving;
         animator.SetBool("IsWalking", true);
-        Vector3 currentPos = transform.position;
         this.transform.LookAt(destinty.transform);
         this.gameObject.transform.DOMove(destinty.position, 2.5f).OnComplete(() =>
         {
+            if (currentCowState == cowStates.Grabbed) return;
+
             MovePointsCow();
             currentCowState = cowStates.Idle;
             animator.SetBool("IsWalking", false);
-
-        } );
-
+        });
     }
 
     IEnumerator waitToChooseAction()
     {
+        isThinking = true;
         int random = Random.Range(0, 11);
-        if(random < 7)
+        if (random < 7)
         {
             currentCowState = cowStates.Eat;
             animator.SetBool("IsEating", true);
             yield return new WaitForSeconds(Random.Range(4, 7));
             animator.SetBool("IsEating", false);
             currentCowState = cowStates.Idle;
-
         }
         else
         {
             currentCowState = cowStates.Moving;
             yield return new WaitForSeconds(Random.Range(4, 10));
             ChoosePoint();
-            Debug.Log("Corruitna");
         }
+        isThinking = false;
     }
-     
-    
-    void DestroyCow()
-    {
 
+    public void GetGrabbed(Transform controllerTransform)
+    {
+        currentCowState = cowStates.Grabbed;
+        StopAllCoroutines();
+        this.transform.DOKill();
+
+        animator.SetBool("IsWalking", false);
+        animator.SetBool("IsEating", false);
+
+        transform.SetParent(controllerTransform, true);
     }
-        
-     
+
+    public void DestroyCow()
+    {
+        Debug.Log("¡Vaca abducida! +100 puntos");
+        Destroy(gameObject);
+    }
 }

@@ -1,54 +1,38 @@
+using System;
 using UnityEngine;
-
-public class ArmSwingLocomotion : MonoBehaviour
+using UnityEngine.InputSystem;
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
+public class CharacterMovement : MonoBehaviour
 {
-    [Header("Referencias de las Manos")]
 
-    public Transform manoIzquierda;
-    public Transform manoDerecha;
-   
-    public Transform direccionCabeza;
+    [SerializeField] private InputActionReference leftHand;
+    public Vector3 velocity;
+    
 
-    [Header("Ajustes de Movimiento")]
-    public float multiplicadorVelocidad = 5.0f;
-    public float umbralMinimo = 0.01f; 
-
-    private Vector3 posAnteriorIzquierda;
-    private Vector3 posAnteriorDerecha;
-
-
-
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-        if (manoIzquierda != null) posAnteriorIzquierda = manoIzquierda.localPosition;
-        if (manoDerecha != null) posAnteriorDerecha = manoDerecha.localPosition;
-        //h
+           
+        if(leftHand == null)
+        {
+            Debug.Log("NO HAND");
+        }
     }
 
+    // Update is called once per frame
     void Update()
     {
-
-        Vector3 posActualIzquierda = manoIzquierda.localPosition;
-        Vector3 posActualDerecha = manoDerecha.localPosition;
-
- 
-        Vector3 deltaIzquierda = posActualIzquierda - posAnteriorIzquierda;
-        Vector3 deltaDerecha = posActualDerecha - posAnteriorDerecha;
-
-        float movimientoBrazos = Mathf.Abs(deltaIzquierda.y) + Mathf.Abs(deltaDerecha.y);
-
-        if (movimientoBrazos > umbralMinimo)
+       if( leftHand != null)
         {
- 
-            Vector3 direccionMovimiento = direccionCabeza.forward;
-            direccionMovimiento.y = 0; 
-
-
-            transform.position += direccionMovimiento.normalized * movimientoBrazos * multiplicadorVelocidad * Time.deltaTime;
+            velocity = leftHand.action.ReadValue<Vector3>();
+            
+        }
+        else
+        {
+            Debug.Log("NO");
         }
 
-        posAnteriorIzquierda = posActualIzquierda;
-        posAnteriorDerecha = posActualDerecha;
+       
     }
 }
