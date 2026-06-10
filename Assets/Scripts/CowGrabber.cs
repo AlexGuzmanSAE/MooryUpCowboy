@@ -27,6 +27,10 @@ public class CowGrabber : MonoBehaviour
 
     public HapticImpulsePlayer hapticPlayer;
 
+    //Sonidos
+    public SoundData controlTrigger_SD;
+    public SoundData cowHit_SD;
+    //
     void OnEnable()
     {
         triggerAction.action.started += OnTriggerPressed;
@@ -45,17 +49,17 @@ public class CowGrabber : MonoBehaviour
     {
         isTriggerHeld = true;
 
+        SoundManager.Instance.CreateSound().WithSoundData(controlTrigger_SD).WithRandomPitch().Play();
     }
 
     void OnTriggerReleased(InputAction.CallbackContext ctx)
     {
         isTriggerHeld = false;
 
-        // Si suelta el gatillo y tenía una vaca, la suelta
         if (grabbedCow != null)
         {
-            grabbedCow.transform.SetParent(null); // La vaca queda libre
-            grabbedCow.currentCowState = COW_IA.cowStates.Idle; // Vuelve a la normalidad
+            grabbedCow.transform.SetParent(null);
+            grabbedCow.currentCowState = COW_IA.cowStates.Idle;
             grabbedCow = null;
         }
 
@@ -69,28 +73,24 @@ public class CowGrabber : MonoBehaviour
 
     void Update()
     {
-        // 1. Lógica para abducir la vaca si ya está agarrada
         if (grabbedCow != null)
         {
             if(vrCamera == null)
                 vrCamera = FindAnyObjectByType<Camera>().transform;
-            // Vector desde tu cabeza hacia tu mano
             Vector3 dirToHand = (rayOrigin.position - vrCamera.position).normalized;
 
-            // Si el producto punto es negativo, la mano está detrás de la cabeza
             float dot = Vector3.Dot(Vector3.up, rigtHand.forward);
 
-            if (dot > 0.9) // Un pequeño margen para que sea un gesto natural
+            if (dot > 0.9)
             {
-                TriggerHaptic(1f, 0.5f); // Super vibración al absorberla
+                TriggerHaptic(1f, 0.5f);
                 grabbedCow.DestroyCow();
                 grabbedCow = null;
                 UpdateLineRenderer(false, Vector3.zero);
-                return; // Cortamos el Update aquí
+                return;
             }
         }
 
-        // 2. Lógica del Raycast si está presionando el gatillo pero no tiene vaca
         if (isTriggerHeld && grabbedCow == null)
         {
             Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
@@ -98,11 +98,11 @@ public class CowGrabber : MonoBehaviour
 
             if (hitCow)
             {
+                SoundManager.Instance.CreateSound().WithSoundData(cowHit_SD).WithRandomPitch().Play();
                 COW_IA targetCow = hit.collider.GetComponent<COW_IA>();
 
                 if (targetCow != null && targetCow.currentCowState != COW_IA.cowStates.Grabbed)
                 {
-                    // ¡La atrapamos inmediatamente!
                     grabbedCow = targetCow;
                     grabbedCow.GetGrabbed(rayOrigin);
                     TriggerHaptic(0.5f, 0.1f);
@@ -114,7 +114,6 @@ public class CowGrabber : MonoBehaviour
             }
         }
 
-        // 3. Actualizar la línea visual hacia la vaca si está agarrada
         if (grabbedCow != null)
         {
             renderPos[0] = rayOrigin.position;
