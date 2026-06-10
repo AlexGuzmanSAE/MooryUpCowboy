@@ -23497,17 +23497,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1254974327}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 0.10691672, y: 0.10691672, z: 0.10691672}
+  m_LocalRotation: {x: -0.15146534, y: -0, z: -0, w: 0.98846257}
+  m_LocalPosition: {x: 0, y: 0, z: 2.86}
+  m_LocalScale: {x: 0.0026167994, y: 0.0026167994, z: 0.0026167994}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1296800263}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 1461745534}
+  m_LocalEulerAnglesHint: {x: -17.424, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -31.5}
+  m_AnchoredPosition: {x: 1.91, y: 1.98}
   m_SizeDelta: {x: 1920.0001, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1258436453
@@ -27123,12 +27123,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8602457384337486565, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1254974332}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
 --- !u!20 &1461745533 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1767192439, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+  m_PrefabInstance: {fileID: 1461745532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1461745534 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8602457384337486565, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
   m_PrefabInstance: {fileID: 1461745532}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1467473772
@@ -39788,4 +39796,3 @@ SceneRoots:
   - {fileID: 9766985}
   - {fileID: 568742178}
   - {fileID: 905572564}
-  - {fileID: 1254974332}
