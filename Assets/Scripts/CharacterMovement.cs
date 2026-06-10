@@ -23,6 +23,7 @@ public class ArmSwingLocomotion : MonoBehaviour
 
         if (manoIzquierda != null) posAnteriorIzquierda = manoIzquierda.localPosition;
         if (manoDerecha != null) posAnteriorDerecha = manoDerecha.localPosition;
+        //h
     }
 
     void Update()
