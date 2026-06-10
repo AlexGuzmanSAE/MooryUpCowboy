@@ -48,7 +48,6 @@ public class CharacterMovement : MonoBehaviour
 
         float movimientoBrazos = Mathf.Abs(deltaIzquierda.y) + Mathf.Abs(deltaDerecha.y);
 
-        // 1. Definimos a qué velocidad "queremos" ir en este frame
         float velocidadObjetivo = 0f;
         if (movimientoBrazos > umbralMinimo)
         {
@@ -56,18 +55,15 @@ public class CharacterMovement : MonoBehaviour
             horseLocomotion.Run();
         }
 
-        // 2. Transición suave (Inercia)
-        // Usamos aceleración si estamos ganando velocidad, y desaceleración si nos estamos deteniendo
         float factorCambio = (velocidadObjetivo > velocidadActual) ? aceleracion : desaceleracion;
         velocidadActual = Mathf.Lerp(velocidadActual, velocidadObjetivo, factorCambio * Time.deltaTime);
 
-        // 3. Aplicamos el movimiento si aún queda velocidad residual
         if (velocidadActual > 0.001f)
         {
             Vector3 direccionMovimiento = direccionCabeza.forward;
             direccionMovimiento.y = 0;
 
-            // Ahora multiplicamos por la velocidad suavizada en lugar del movimiento bruto
+
             transform.position += direccionMovimiento.normalized * velocidadActual * Time.deltaTime;
         }
 
