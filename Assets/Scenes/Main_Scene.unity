@@ -1027,19 +1027,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 441087508}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 419cd33b56b8b5b4c82fd9cf3e61d103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CowGrabber
-  vrCamera: {fileID: 0}
+  vrCamera: {fileID: 1071902209}
   rayDistance: 10
   cowLayer:
     serializedVersion: 2
     m_Bits: 64
   rayOrigin: {fileID: 2075511704}
   triggerAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  lineRenderer: {fileID: 0}
+  lineRenderer: {fileID: 441087510}
 --- !u!120 &441087510
 LineRenderer:
   serializedVersion: 3
