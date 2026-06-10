@@ -493,9 +493,17 @@ PrefabInstance:
       value: -0.000017977089
       objectReference: {fileID: 0}
     - target: {fileID: 651585730149602342, guid: dab9fbaaf814a8f4fbc8087047654be3, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 651585730149602342, guid: dab9fbaaf814a8f4fbc8087047654be3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 5149b0dbd4ca2504cabd147701bf6af7, type: 2}
+    - target: {fileID: 651585730149602342, guid: dab9fbaaf814a8f4fbc8087047654be3, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 99c422a3c7e1c47498748955182aeebc, type: 2}
     - target: {fileID: 692512430197973639, guid: dab9fbaaf814a8f4fbc8087047654be3, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -877,10 +885,10 @@ PrefabInstance:
       addedObject: {fileID: 5040851741063150952}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dab9fbaaf814a8f4fbc8087047654be3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8804818291864912910}
+      addedObject: {fileID: 5017052057278805969}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dab9fbaaf814a8f4fbc8087047654be3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2932849281077624993}
+      addedObject: {fileID: 1951256648268760974}
   m_SourcePrefab: {fileID: 100100000, guid: dab9fbaaf814a8f4fbc8087047654be3, type: 3}
 --- !u!1 &5848309821773348736 stripped
 GameObject:
@@ -909,7 +917,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8804818291864912910
+--- !u!114 &5017052057278805969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -925,8 +933,16 @@ MonoBehaviour:
   collisionPoints: []
   animator: {fileID: 0}
   radius: 5.4
+  detectionMask:
+    serializedVersion: 2
+    m_Bits: 136
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  rayStartHeight: 5
+  raycastDistance: 10
   currentCowState: 0
---- !u!65 &2932849281077624993
+--- !u!65 &1951256648268760974
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

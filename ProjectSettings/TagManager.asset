@@ -5,15 +5,16 @@ TagManager:
   serializedVersion: 3
   tags:
   - Anchor
+  - Spawner
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Terrain
   - Water
   - UI
   - Cow
-  - 
+  - Deco
   - 
   - 
   - 

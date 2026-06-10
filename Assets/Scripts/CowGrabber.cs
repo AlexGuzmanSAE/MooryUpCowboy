@@ -6,6 +6,7 @@ public class CowGrabber : MonoBehaviour
 {
     [Header("VR Setup")]
     public Transform vrCamera; // OBLIGATORIO: Arrastra tu Main Camera de XR aquí
+    public Transform rigtHand;
 
     [Header("Raycast")]
     public float rayDistance = 10f;
@@ -55,19 +56,26 @@ public class CowGrabber : MonoBehaviour
 
         UpdateLineRenderer(false, Vector3.zero);
     }
+    private void Start()
+    {
+        if(lineRenderer == null)
+            lineRenderer = gameObject.GetComponent<LineRenderer>();
+    }
 
     void Update()
     {
         // 1. Lógica para abducir la vaca si ya está agarrada
         if (grabbedCow != null)
         {
+            if(vrCamera == null)
+                vrCamera = FindAnyObjectByType<Camera>().transform;
             // Vector desde tu cabeza hacia tu mano
             Vector3 dirToHand = (rayOrigin.position - vrCamera.position).normalized;
 
             // Si el producto punto es negativo, la mano está detrás de la cabeza
-            float dot = Vector3.Dot(vrCamera.forward, dirToHand);
+            float dot = Vector3.Dot(Vector3.up, rigtHand.forward);
 
-            if (dot < -0.2f) // Un pequeño margen para que sea un gesto natural
+            if (dot > 0.9) // Un pequeño margen para que sea un gesto natural
             {
                 TriggerHaptic(1f, 0.5f); // Super vibración al absorberla
                 grabbedCow.DestroyCow();

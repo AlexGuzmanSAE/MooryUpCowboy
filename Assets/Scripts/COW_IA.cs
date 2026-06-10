@@ -9,6 +9,11 @@ public class COW_IA : MonoBehaviour
     public List<GameObject> collisionPoints = new List<GameObject>();
     public Animator animator;
     public float radius;
+    
+    [SerializeField] private LayerMask detectionMask; 
+    [SerializeField] private LayerMask terrainLayer; 
+    [SerializeField] private float rayStartHeight = 5f; 
+    [SerializeField] private float raycastDistance = 10f; 
 
     public enum cowStates
     {
@@ -39,18 +44,18 @@ public class COW_IA : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, radius);
-        if (collisionPoints.Count > 0)
-        {
-            foreach (GameObject pos in collisionPoints)
-            {
-                Gizmos.DrawSphere(pos.transform.position, 1.1f);
-            }
-        }
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.green;
+    //     Gizmos.DrawWireSphere(transform.position, radius);
+    //     if (collisionPoints.Count > 0)
+    //     {
+    //         foreach (GameObject pos in collisionPoints)
+    //         {
+    //             Gizmos.DrawSphere(pos.transform.position, 1.1f);
+    //         }
+    //     }
+    // }
 
     private void initialitePoints()
     {
@@ -60,13 +65,27 @@ public class COW_IA : MonoBehaviour
             float angle = i * 45;
             Quaternion rot = Quaternion.Euler(0, angle, 0);
             Vector3 spawnOffset = new Vector3(
-                   Mathf.Sin(angle * Mathf.Deg2Rad) * radius,
-                   0,
-                   Mathf.Cos(angle * Mathf.Deg2Rad) * radius
-               );
+                Mathf.Sin(angle * Mathf.Deg2Rad) * radius,
+                0,
+                Mathf.Cos(angle * Mathf.Deg2Rad) * radius
+            );
             Vector3 spawnPos = currentPos + spawnOffset;
-            GameObject newPoint = Instantiate(prefabForPoints, spawnPos, rot);
-            collisionPoints.Add(newPoint);
+            
+            Vector3 rayOrigin = new Vector3(spawnPos.x, spawnPos.y + rayStartHeight, spawnPos.z);
+            
+            if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, raycastDistance, detectionMask))
+            {
+
+                if (((1 << hit.collider.gameObject.layer) & terrainLayer) != 0)
+                {
+                    GameObject newPoint = Instantiate(prefabForPoints, hit.point, rot,this.transform);
+                    if (newPoint.TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
+                    {
+                        meshRenderer.enabled = false; 
+                    }
+                    collisionPoints.Add(newPoint);
+                }
+            }
         }
     }
 
@@ -81,10 +100,10 @@ public class COW_IA : MonoBehaviour
                 float angle = i * 45;
                 Quaternion rot = Quaternion.Euler(0, angle, 0);
                 Vector3 spawnOffset = new Vector3(
-                       Mathf.Sin(angle * Mathf.Deg2Rad) * radius,
-                       0,
-                       Mathf.Cos(angle * Mathf.Deg2Rad) * radius
-                   );
+                    Mathf.Sin(angle * Mathf.Deg2Rad) * radius,
+                    0,
+                    Mathf.Cos(angle * Mathf.Deg2Rad) * radius
+                );
                 i++;
                 Vector3 spawnPos = currentPos + spawnOffset;
                 pos.transform.position = spawnPos;
@@ -135,6 +154,7 @@ public class COW_IA : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(4, 10));
             ChoosePoint();
         }
+
         isThinking = false;
     }
 
@@ -152,6 +172,7 @@ public class COW_IA : MonoBehaviour
 
     public void DestroyCow()
     {
+        GameManager.instance.AddScore();
         Debug.Log("¡Vaca abducida! +100 puntos e");
         Destroy(gameObject);
     }
