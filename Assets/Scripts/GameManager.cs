@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         if (RemainigTime > 0)
         {
             RemainigTime -= Time.deltaTime;
-            Debug.Log(RemainigTime);
+           
         }
         else
         {
