@@ -47,7 +47,7 @@ public class HeadsetRotation : MonoBehaviour
         }
         _smoothedTurn = Mathf.Lerp(activeDelta, _smoothedTurn, smoothing);
         turnDegreesPerSecond = _smoothedTurn;
-
+        
     }
 
     public void RecalibrateForward()
@@ -55,7 +55,7 @@ public class HeadsetRotation : MonoBehaviour
         if (hmdTransform != null)
         {
             _referenceRoll = hmdTransform.eulerAngles.z;
-            Debug.Log($"[HeadsetRotation] Forward recalibrado: {_referenceRoll:F1}°");
+            
         }
     }
 }
