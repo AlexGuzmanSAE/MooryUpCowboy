@@ -2849,7 +2849,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3851015956068934394, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       propertyPath: m_Name
-      value: Horse_001
+      value: Horse_01
       objectReference: {fileID: 0}
     - target: {fileID: 3851015956068934394, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       propertyPath: m_IsActive
@@ -3146,17 +3146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b050a059eb416c146b1e395c1e61e7aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HorseLocomotion
-  reinController: {fileID: 0}
-  headsetRotation: {fileID: 441087523}
-  maxSpeed: 8
-  acceleration: 6
-  deceleration: 10
-  gravity: 20
-  animSpeedParam: Speed
-  animTurnParam: TurnSpeed
-  gallopAudio: {fileID: 0}
-  gallopAudioThreshold: 0.1
-  showDebugGUI: 1
+  headset: {fileID: 0}
 --- !u!114 &1476208697 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7347985736721345035, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
