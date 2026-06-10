@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class CowGrabber : MonoBehaviour
 {
@@ -23,6 +25,8 @@ public class CowGrabber : MonoBehaviour
     private COW_IA grabbedCow = null; // Cambiado a COW_IA
     private Vector3[] renderPos = new Vector3[2];
 
+    public HapticImpulsePlayer hapticPlayer;
+
     void OnEnable()
     {
         triggerAction.action.started += OnTriggerPressed;
@@ -40,6 +44,7 @@ public class CowGrabber : MonoBehaviour
     void OnTriggerPressed(InputAction.CallbackContext ctx)
     {
         isTriggerHeld = true;
+
     }
 
     void OnTriggerReleased(InputAction.CallbackContext ctx)
@@ -132,8 +137,7 @@ public class CowGrabber : MonoBehaviour
 
     void TriggerHaptic(float amplitude, float duration)
     {
-        var device = GetComponent<XRBaseController>();
-        if (device != null)
-            device.SendHapticImpulse(amplitude, duration);
+        hapticPlayer = GetComponent<HapticImpulsePlayer>();
+        hapticPlayer.SendHapticImpulse(0.5f, 0.2f);
     }
 }
