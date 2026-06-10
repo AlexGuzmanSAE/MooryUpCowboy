@@ -7,15 +7,14 @@ public class GameManager : MonoBehaviour
 
     //Cosas para el tiempo de la partida.
     float RemainigTime;
-    float maxTime;
-   //Singleton
-   static public GameManager instance;
 
-   
+    //Singleton
+    static public GameManager instance;
+
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
             instance = this;
         else
             Destroy(this);
@@ -24,21 +23,32 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
-        currentScore = 0;     
+        RemainigTime = 60.0f;
+        currentScore = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        SubstractTime();
     }
 
     public void AddScore()
     {
-        currentScore++; 
-       UI_Manager.instance.UpdateTextScore(currentScore);
+        currentScore++;
+        UI_Manager.instance.UpdateTextScore(currentScore);
     }
 
-
+    void SubstractTime()
+    {
+        if (RemainigTime > 0)
+        {
+            RemainigTime -= Time.deltaTime;
+            Debug.Log(RemainigTime);
+        }
+        else
+        {
+            //Se acabo el juego.
+        }
+    }
 }
