@@ -3,33 +3,40 @@ using TMPro;
 using UnityEngine.UI;
 public class UI_Manager : MonoBehaviour
 {
+    public static UI_Manager instance;
     [SerializeField]
     private TextMeshProUGUI _cowCounterText;
 
     [SerializeField]
     private Image _fillDayNightMeter;
 
-    private int _cowCount = 0;
 
 
-    private void OnEnable()
+    private void Awake()
     {
-        Cow_Collector collector = FindObjectOfType<Cow_Collector>();
-        collector.colectionEvent += UpdateCowCounter;
+        if (instance == null)
+        {
+            instance = this;
+        }else
+            Destroy(this);
     }
+
+
 
     void Start()
     {
-        _cowCounterText.text = string.Format("X {0}", _cowCount);
-        _fillDayNightMeter.fillAmount = 1;
+        if(_cowCounterText)
+        {
+            _cowCounterText.text = 0.ToString();
+        }
     }
 
-    private void UpdateCowCounter(int amount)
+    public void UpdateTextScore(int newValue)
     {
-        _cowCount += amount;
-        _cowCounterText.text = string.Format("X {0}", _cowCount);
+        _cowCounterText.text = newValue.ToString();
     }
 
-    // This is a placeholder for the day/night meter, it will be updated in the future when the day/night cycle is implemented
+
+
 
 }

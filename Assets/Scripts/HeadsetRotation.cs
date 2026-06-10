@@ -47,7 +47,7 @@ public class HeadsetRotation : MonoBehaviour
         }
         _smoothedTurn = Mathf.Lerp(activeDelta, _smoothedTurn, smoothing);
         turnDegreesPerSecond = _smoothedTurn;
-        Debug.Log("SmoothedTurn = " + _smoothedTurn + " current roll = " + currentRoll);
+
     }
 
     public void RecalibrateForward()
