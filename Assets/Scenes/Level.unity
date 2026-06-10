@@ -25527,6 +25527,11 @@ Transform:
   - {fileID: 846611016}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1410065952 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1767192434, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+  m_PrefabInstance: {fileID: 1461745532}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1417977335
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26321,11 +26326,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1997046425178693740, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: rigtHand
+      value: 
+      objectReference: {fileID: 1461745533}
+    - target: {fileID: 1997046425178693740, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: lineRenderer
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5663893676086941514, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_SmoothMotionEnabled
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1997046425178693740, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1670256625, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
@@ -26364,15 +26378,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 419cd33b56b8b5b4c82fd9cf3e61d103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CowGrabber
-  vrCamera: {fileID: 0}
-  rigtHand: {fileID: 0}
+  vrCamera: {fileID: 1410065952}
+  rigtHand: {fileID: 1461745533}
   rayDistance: 10
   cowLayer:
     serializedVersion: 2
     m_Bits: 64
   rayOrigin: {fileID: 1862686205}
   triggerAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  lineRenderer: {fileID: 0}
+  lineRenderer: {fileID: 1461745536}
 --- !u!120 &1461745536
 LineRenderer:
   serializedVersion: 3
