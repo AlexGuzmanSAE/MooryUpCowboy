@@ -1,38 +1,53 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.XR;
-using UnityEngine.XR.Interaction.Toolkit;
-public class CharacterMovement : MonoBehaviour
+
+public class ArmSwingLocomotion : MonoBehaviour
 {
+    [Header("Referencias de las Manos")]
 
-    [SerializeField] private InputActionReference leftHand;
-    public Vector3 velocity;
-    
+    public Transform manoIzquierda;
+    public Transform manoDerecha;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Transform direccionCabeza;
+
+    [Header("Ajustes de Movimiento")]
+    public float multiplicadorVelocidad = 5.0f;
+    public float umbralMinimo = 0.01f; 
+
+    private Vector3 posAnteriorIzquierda;
+    private Vector3 posAnteriorDerecha;
+
     void Start()
     {
-           
-        if(leftHand == null)
-        {
-            Debug.Log("NO HAND");
-        }
+        if (manoIzquierda != null) posAnteriorIzquierda = manoIzquierda.localPosition;
+        if (manoDerecha != null) posAnteriorDerecha = manoDerecha.localPosition;
     }
 
-    // Update is called once per frame
     void Update()
     {
-       if( leftHand != null)
+
+        Vector3 posActualIzquierda = manoIzquierda.localPosition;
+        Vector3 posActualDerecha = manoDerecha.localPosition;
+
+
+        Vector3 deltaIzquierda = posActualIzquierda - posAnteriorIzquierda;
+        Vector3 deltaDerecha = posActualDerecha - posAnteriorDerecha;
+
+
+        float movimientoBrazos = Mathf.Abs(deltaIzquierda.y) + Mathf.Abs(deltaDerecha.y);
+
+
+        if (movimientoBrazos > umbralMinimo)
         {
-            velocity = leftHand.action.ReadValue<Vector3>();
-            
-        }
-        else
-        {
-            Debug.Log("NO");
+
+            Vector3 direccionMovimiento = direccionCabeza.forward;
+            direccionMovimiento.y = 0; 
+
+     
+            transform.position += direccionMovimiento.normalized * movimientoBrazos * multiplicadorVelocidad * Time.deltaTime;
         }
 
-       
+        
+        posAnteriorIzquierda = posActualIzquierda;
+        posAnteriorDerecha = posActualDerecha;
     }
 }

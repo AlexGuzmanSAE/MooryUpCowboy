@@ -982,7 +982,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
-      insertIndex: -1
+      insertIndex: 0
       addedObject: {fileID: 1400534793}
     - targetCorrespondingSourceObject: {fileID: 1767192434, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       insertIndex: -1
@@ -1000,6 +1000,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 441087523}
+    - targetCorrespondingSourceObject: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 441087524}
     - targetCorrespondingSourceObject: {fileID: 1670256624, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 441087510}
@@ -1029,15 +1032,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 419cd33b56b8b5b4c82fd9cf3e61d103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CowGrabber
+  vrCamera: {fileID: 0}
   rayDistance: 10
   cowLayer:
     serializedVersion: 2
     m_Bits: 64
   rayOrigin: {fileID: 2075511704}
-  requiredHoldTime: 1.5
   triggerAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   lineRenderer: {fileID: 0}
-  chargeIndicator: {fileID: 0}
 --- !u!120 &441087510
 LineRenderer:
   serializedVersion: 3
@@ -1193,6 +1195,23 @@ MonoBehaviour:
   maxTurnSpeed: 90
   smoothing: 0.15
   turnDegreesPerSecond: 0
+--- !u!114 &441087524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441087511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e543c3ddfde934781d9d29a581bd2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArmSwingLocomotion
+  manoIzquierda: {fileID: 385208419}
+  manoDerecha: {fileID: 441087507}
+  direccionCabeza: {fileID: 1071902209}
+  multiplicadorVelocidad: 50
+  umbralMinimo: 0.01
 --- !u!1 &657581337
 GameObject:
   m_ObjectHideFlags: 0
@@ -2861,7 +2880,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4483999970917742656, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.722
+      value: -0.47
       objectReference: {fileID: 0}
     - target: {fileID: 4483999970917742656, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3146,7 +3165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b050a059eb416c146b1e395c1e61e7aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HorseLocomotion
-  headset: {fileID: 0}
 --- !u!114 &1476208697 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7347985736721345035, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
