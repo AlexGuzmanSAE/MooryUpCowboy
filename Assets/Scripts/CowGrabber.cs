@@ -76,11 +76,11 @@ public class CowGrabber : MonoBehaviour
         Ray ray = new Ray(rayOrigin.position, rayOrigin.forward * 50);
         bool hitCow = Physics.Raycast(ray, out RaycastHit hit, rayDistance, cowLayer);
 
-        renderPos[0] = transform.position;
-        renderPos[1] = hit.collider.gameObject.transform.position;
 
         if (hitCow)
         {
+            renderPos[0] = transform.position;
+            renderPos[1] = hit.collider.gameObject.transform.position;
             lineRenderer.SetPositions(renderPos);
             targetCow = hit.collider.GetComponent<Cow_Info>();
             UpdateLineRenderer(true, hit.point);
