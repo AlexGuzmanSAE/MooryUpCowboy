@@ -493,9 +493,17 @@ PrefabInstance:
       value: -0.000017977089
       objectReference: {fileID: 0}
     - target: {fileID: 651585730149602342, guid: dab9fbaaf814a8f4fbc8087047654be3, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 651585730149602342, guid: dab9fbaaf814a8f4fbc8087047654be3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 5149b0dbd4ca2504cabd147701bf6af7, type: 2}
+    - target: {fileID: 651585730149602342, guid: dab9fbaaf814a8f4fbc8087047654be3, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 99c422a3c7e1c47498748955182aeebc, type: 2}
     - target: {fileID: 692512430197973639, guid: dab9fbaaf814a8f4fbc8087047654be3, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -925,6 +933,14 @@ MonoBehaviour:
   collisionPoints: []
   animator: {fileID: 0}
   radius: 5.4
+  detectionMask:
+    serializedVersion: 2
+    m_Bits: 136
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  rayStartHeight: 5
+  raycastDistance: 10
   currentCowState: 0
 --- !u!65 &1951256648268760974
 BoxCollider:
