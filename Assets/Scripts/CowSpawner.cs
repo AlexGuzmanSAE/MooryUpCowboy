@@ -33,7 +33,7 @@ public class CowSpawner : MonoBehaviour
         for (int i = 0; i < this.transform.childCount; i++)
         {
             cowSpawnPoints.Add(transform.GetChild(i));
-            Debug.unityLogger.Log("Cow Spawn Point: " + cowSpawnPoints[i].name);
+            
         }
     }
 

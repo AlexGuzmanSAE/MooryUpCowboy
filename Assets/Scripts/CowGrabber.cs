@@ -7,13 +7,13 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 public class CowGrabber : MonoBehaviour
 {
     [Header("VR Setup")]
-    public Transform vrCamera; // OBLIGATORIO: Arrastra tu Main Camera de XR aquí
+    public Transform vrCamera;
     public Transform rigtHand;
 
     [Header("Raycast")]
     public float rayDistance = 10f;
     public LayerMask cowLayer;
-    public Transform rayOrigin; // Punta del controlador
+    public Transform rayOrigin;
 
     [Header("Input Action")]
     public InputActionReference triggerAction;
@@ -22,16 +22,15 @@ public class CowGrabber : MonoBehaviour
     public LineRenderer lineRenderer;
 
     private bool isTriggerHeld = false;
-    private COW_IA grabbedCow = null; // Cambiado a COW_IA
-    private Vector3[] renderPos = new Vector3[2];
+    private COW_IA grabbedCow = null;
 
     public HapticImpulsePlayer hapticPlayer;
 
-    //Sonidos
+    [Header("Sonidos")]
     public SoundData controlTrigger_SD;
     public SoundData cowHit_SD;
     public SoundData scoreSD;
-    //
+
     void OnEnable()
     {
         triggerAction.action.started += OnTriggerPressed;
@@ -46,10 +45,17 @@ public class CowGrabber : MonoBehaviour
         triggerAction.action.Disable();
     }
 
+    private void Start()
+    {
+        if (lineRenderer == null)
+            lineRenderer = gameObject.GetComponent<LineRenderer>();
+
+        UpdateLineRenderer(false, Vector3.zero);
+    }
+
     void OnTriggerPressed(InputAction.CallbackContext ctx)
     {
         isTriggerHeld = true;
-
         SoundManager.Instance.CreateSound().WithSoundData(controlTrigger_SD).WithRandomPitch().Play();
     }
 
@@ -66,20 +72,15 @@ public class CowGrabber : MonoBehaviour
 
         UpdateLineRenderer(false, Vector3.zero);
     }
-    private void Start()
-    {
-        if(lineRenderer == null)
-            lineRenderer = gameObject.GetComponent<LineRenderer>();
-    }
 
     void Update()
     {
         if (grabbedCow != null)
         {
-            if(vrCamera == null)
+            if (vrCamera == null)
                 vrCamera = FindAnyObjectByType<Camera>().transform;
-            Vector3 dirToHand = (rayOrigin.position - vrCamera.position).normalized;
 
+            Vector3 dirToHand = (rayOrigin.position - vrCamera.position).normalized;
             float dot = Vector3.Dot(Vector3.up, rigtHand.forward);
 
             if (dot > 0.9)
@@ -91,20 +92,26 @@ public class CowGrabber : MonoBehaviour
                 SoundManager.Instance.CreateSound().WithSoundData(scoreSD).Play();
                 return;
             }
-        }
 
-        if (isTriggerHeld && grabbedCow == null)
+            if (grabbedCow != null)
+            {
+                UpdateLineRenderer(true, grabbedCow.transform.position);
+            }
+        }
+        else if (isTriggerHeld)
         {
             Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
             bool hitCow = Physics.Raycast(ray, out RaycastHit hit, rayDistance, cowLayer);
 
             if (hitCow)
             {
-                SoundManager.Instance.CreateSound().WithSoundData(cowHit_SD).WithRandomPitch().Play();
+                UpdateLineRenderer(true, hit.point);
+
                 COW_IA targetCow = hit.collider.GetComponent<COW_IA>();
 
-                if (targetCow != null && targetCow.currentCowState != COW_IA.cowStates.Grabbed)
+                  if (targetCow != null && targetCow.currentCowState != COW_IA.cowStates.Grabbed)
                 {
+                    SoundManager.Instance.CreateSound().WithSoundData(cowHit_SD).WithRandomPitch().Play();
                     grabbedCow = targetCow;
                     grabbedCow.GetGrabbed(rayOrigin);
                     TriggerHaptic(0.5f, 0.1f);
@@ -115,19 +122,16 @@ public class CowGrabber : MonoBehaviour
                 UpdateLineRenderer(true, rayOrigin.position + rayOrigin.forward * rayDistance);
             }
         }
-
-        if (grabbedCow != null)
+        else
         {
-            renderPos[0] = rayOrigin.position;
-            renderPos[1] = grabbedCow.transform.position;
-            lineRenderer.enabled = true;
-            lineRenderer.SetPositions(renderPos);
+            UpdateLineRenderer(false, Vector3.zero);
         }
     }
 
     void UpdateLineRenderer(bool active, Vector3 endPoint)
     {
         if (!lineRenderer) return;
+
         lineRenderer.enabled = active;
         if (active)
         {
@@ -138,7 +142,10 @@ public class CowGrabber : MonoBehaviour
 
     void TriggerHaptic(float amplitude, float duration)
     {
-        hapticPlayer = GetComponent<HapticImpulsePlayer>();
-        hapticPlayer.SendHapticImpulse(0.5f, 0.2f);
+        if (hapticPlayer == null)
+            hapticPlayer = GetComponent<HapticImpulsePlayer>();
+
+        if (hapticPlayer != null)
+            hapticPlayer.SendHapticImpulse(amplitude, duration);
     }
 }

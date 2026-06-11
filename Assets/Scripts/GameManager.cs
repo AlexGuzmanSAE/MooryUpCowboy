@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -11,6 +12,9 @@ public class GameManager : MonoBehaviour
     //Singleton
     static public GameManager instance;
 
+    public RectTransform GameOverLay;
+    public TextMeshProUGUI scoreTxt;
+    
 
     private void Awake()
     {
@@ -25,9 +29,9 @@ public class GameManager : MonoBehaviour
     {
         RemainigTime = 60.0f;
         currentScore = 0;
+        GameOverLay.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         SubstractTime();
@@ -48,7 +52,18 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            //Se acabo el juego.
+            
+            GameOverLay.gameObject.SetActive(true);
+            scoreTxt.text = string.Format("Score: {0}", currentScore);
         }
     }
+
+    public void ResetGame()
+    {
+        //Destruir vacas
+        //SpawnPosPLayer
+        //reset tiempo, puntos
+
+    }
+
 }
