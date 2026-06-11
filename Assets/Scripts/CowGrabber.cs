@@ -30,6 +30,7 @@ public class CowGrabber : MonoBehaviour
     //Sonidos
     public SoundData controlTrigger_SD;
     public SoundData cowHit_SD;
+    public SoundData scoreSD;
     //
     void OnEnable()
     {
@@ -87,6 +88,7 @@ public class CowGrabber : MonoBehaviour
                 grabbedCow.DestroyCow();
                 grabbedCow = null;
                 UpdateLineRenderer(false, Vector3.zero);
+                SoundManager.Instance.CreateSound().WithSoundData(scoreSD).Play();
                 return;
             }
         }

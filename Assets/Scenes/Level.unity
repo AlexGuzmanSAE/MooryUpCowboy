@@ -13658,6 +13658,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4281780448642680, guid: 0f9577b4dda6cc546abea4737be5a392, type: 3}
   m_PrefabInstance: {fileID: 742069950}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &743109429
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 743109431}
+  - component: {fileID: 743109430}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &743109430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743109429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a57f510920d07446bb374e1a1263db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
+  AutoUnparentOnAwake: 1
+  soundEmitterPrefab: {fileID: 324006504676035805, guid: 81e176c4f1c37904885b8d46e68b0cad, type: 3}
+  collectionCheck: 1
+  defaultCapacity: 10
+  maxPoolSize: 100
+  maxSoundInstances: 30
+--- !u!4 &743109431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743109429}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.28667, y: 1.96033, z: -0.35293}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &744704423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26745,6 +26795,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.00000031392733
       objectReference: {fileID: 0}
+    - target: {fileID: 1997046425178693740, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: cowHit_SD.clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9c489f5704ee0f5429199cdf5da35319, type: 3}
+    - target: {fileID: 1997046425178693740, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: controlTrigger_SD.clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 821b49f41f8f77f45addddb68d352599, type: 3}
     - target: {fileID: 2585520883084058493, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 40.2814
@@ -26758,13 +26816,101 @@ PrefabInstance:
       value: 4.364822
       objectReference: {fileID: 0}
     - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: aceleracion
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: desaceleracion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: intervaloPasos
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: horseLocomotion
       value: 
       objectReference: {fileID: 99762747}
     - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: multiplicadorVelocidad
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: horseStepsSD.frequentSound
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: horseStepsSD.walkClips.Array.size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 44ab60cbe2a965447b848c56f77d48fe, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 7f75229257ee7b646ac1121f5837765b, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 38be61e0805e17f45878094f3121da83, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c0c0339b77429a940a5ab2baec8e6845, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e1c71a7f87906704a837778eeeb6f56d, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c99aac05fdd594d4fa7dcba9fb74aaf9, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[6]'
+      value: 
+      objectReference: {fileID: 8300000, guid: b97fe6da32b263640bae46917b072f99, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[7]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 5571c609588167a44994cb589b7afa90, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[8]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1934322400d250946b8d4e87ee33da5e, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[9]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 950c01acff0dbe144b37d824ea927624, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[10]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3bdd0a3410acfa94d9b1d2acf094ade9, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[11]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4a3f9cce8a648574a82d41827a6ad048, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[12]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 59e4a3bbd61f21a4e84fd83f5de6a017, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[13]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4d7c91c40e0b82e45ba1b746f95f0a4f, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[14]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1a13fdcf4e99d2c41bb65c558d114130, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[15]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c6584805729d5ad40ac93b3f560ac4ce, type: 3}
+    - target: {fileID: 2630296160779415196, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: 'horseStepsSD.walkClips.Array.data[16]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e8f2d77c1c377ef4eb9888cd21511512, type: 3}
     - target: {fileID: 2757881550369453060, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -11.082474
@@ -39789,3 +39935,4 @@ SceneRoots:
   - {fileID: 568742178}
   - {fileID: 905572564}
   - {fileID: 1254974332}
+  - {fileID: 743109431}

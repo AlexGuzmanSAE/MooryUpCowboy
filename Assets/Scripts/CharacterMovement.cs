@@ -9,24 +9,30 @@ public class CharacterMovement : MonoBehaviour
     public Transform direccionCabeza;
 
     [Header("Ajustes de Movimiento")]
-    public float multiplicadorVelocidad = 5.0f;
-    public float umbralMinimo = 0.01f;
-    public float velocidadRotacionCaballo = 5.0f;
+    public float multiplicadorVelocidad;
+    public float umbralMinimo;
+    public float velocidadRotacionCaballo;
 
     [Header("Ajustes de Inercia")]
-    public float aceleracion = 5.0f; // Qué tan rápido alcanza la velocidad al mover las manos
-    public float desaceleracion = 2.0f; // Qué tan suavemente frena al dejar de moverlas
+    public float aceleracion;
+    public float desaceleracion;
 
     [Header("Caballito")]
     public Transform caballoT;
+    public HorseLocomotion horseLocomotion;
 
+    [Header("Ajustes de Audio")]
+    [Tooltip("Tiempo en segundos entre cada sonido de paso")]
+    public float intervaloPasos;
+
+    // Referencias internas
     private Vector3 posAnteriorIzquierda;
     private Vector3 posAnteriorDerecha;
-
-    // Nueva variable para guardar el impulso actual
     private float velocidadActual = 0f;
+    private float _timerPasos = 0f;
 
-    public HorseLocomotion horseLocomotion;
+    [Header("Sound")]
+    public SoundData horseStepsSD;
 
     void Start()
     {
@@ -58,13 +64,29 @@ public class CharacterMovement : MonoBehaviour
         float factorCambio = (velocidadObjetivo > velocidadActual) ? aceleracion : desaceleracion;
         velocidadActual = Mathf.Lerp(velocidadActual, velocidadObjetivo, factorCambio * Time.deltaTime);
 
-        if (velocidadActual > 0.001f)
+        if (velocidadActual > 0.05f)
         {
             Vector3 direccionMovimiento = direccionCabeza.forward;
             direccionMovimiento.y = 0;
 
-
             transform.position += direccionMovimiento.normalized * velocidadActual * Time.deltaTime;
+
+            _timerPasos -= Time.deltaTime;
+
+            if (_timerPasos <= 0f)
+            {
+                SoundManager.Instance.CreateSound()
+                    .WithSoundData(horseStepsSD)
+                    .WithRandomPitch()
+                    .StepSound()
+                    .Play();
+
+                _timerPasos = intervaloPasos;
+            }
+        }
+        else
+        {
+            _timerPasos = 0f;
         }
 
         posAnteriorIzquierda = posActualIzquierda;
