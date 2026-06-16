@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
         currentScore = 0;
         isStarted = false;
         GameOverLay.gameObject.SetActive(false);
+        StartGame();
     }
 
     void Update()
@@ -59,13 +60,13 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            ResetGame();
+            GameOverLay.gameObject.SetActive(true);
         }
     }
 
     public void ResetGame()
     {
-        GameOverLay.gameObject.SetActive(true);
+        print("reset");
         CowSpawner.instance.EmptyListOfCows();
         if(playerReference != null)
         {

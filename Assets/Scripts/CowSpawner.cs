@@ -13,6 +13,19 @@ public class CowSpawner : MonoBehaviour
     bool isSpawning;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
     void Start()
     {
         cowSpawnPoints = new List<Transform>();
