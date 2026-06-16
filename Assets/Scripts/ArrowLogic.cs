@@ -28,6 +28,7 @@ public class ArrowLogic : MonoBehaviour
             if (corregirRotacion)
             {
                 transform.Rotate(ajusteRotacion);
+                
             }
         }
     }
