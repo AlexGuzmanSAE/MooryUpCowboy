@@ -10421,10 +10421,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b462177e25455d43b32d4e2b8b48177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  RemainigTime: 0
   GameOverLay: {fileID: 1461745533}
   scoreTxt: {fileID: 1461745534}
-  spawnPlayer: {fileID: 0}
-  playerReference: {fileID: 0}
+  spawnPlayer: {fileID: 1101925589}
+  playerReference: {fileID: 925141891}
   isStarted: 0
 --- !u!4 &568742178
 Transform:
@@ -17019,6 +17020,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4281780448642680, guid: 0f9577b4dda6cc546abea4737be5a392, type: 3}
   m_PrefabInstance: {fileID: 923838557}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &925141891 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1717954561962503725, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+  m_PrefabInstance: {fileID: 1461745532}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &929333106
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17546,6 +17552,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 18cea87bdb7d0fa46986e492321f3d1e, type: 3}
   m_PrefabInstance: {fileID: 942202758}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &943866957 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3288918422437213896, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+  m_PrefabInstance: {fileID: 1461745532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &943866963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943866957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7951c64acb0fa62458bf30a60089fe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.UI.TrackedDeviceGraphicRaycaster
+  m_IgnoreReversedGraphics: 0
+  m_CheckFor2DOcclusion: 0
+  m_CheckFor3DOcclusion: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RaycastTriggerInteraction: 1
 --- !u!1001 &945703945
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26344,7 +26374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7958397794449758510, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResetGame
+      value: StartGame
       objectReference: {fileID: 0}
     - target: {fileID: 7958397794449758510, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -26357,7 +26387,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3288918422437213896, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 943866963}
   m_SourcePrefab: {fileID: 100100000, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
 --- !u!224 &1461745533 stripped
 RectTransform:
