@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     int currentScore;
 
     //Cosas para el tiempo de la partida.
-    float RemainigTime;
+   public float RemainigTime;
 
     //Singleton
     static public GameManager instance;
@@ -56,33 +56,43 @@ public class GameManager : MonoBehaviour
         if (RemainigTime > 0 && isStarted)
         {
             RemainigTime -= Time.deltaTime;
-           
+
         }
         else
         {
-            GameOverLay.gameObject.SetActive(true);
+            End();
         }
     }
 
-    public void ResetGame()
+
+
+    public void StartGame()
+    {
+
+        GameOverLay.gameObject.SetActive(false);
+        isStarted = true;
+    }
+
+    public void End()
+    {
+        GameOverLay.gameObject.SetActive(true);
+        isStarted = false;
+    }
+
+    public void Reset()
     {
         print("reset");
         CowSpawner.instance.EmptyListOfCows();
-        if(playerReference != null)
+        if (playerReference != null)
         {
             playerReference.transform.position = spawnPlayer.position;
         }
         RemainigTime = 60.0f;
         currentScore = 0;
         UI_Manager.instance.UpdateTextScore(0);
-        isStarted = false;
 
-    }
-
-    public void StartGame()
-    {
         GameOverLay.gameObject.SetActive(false);
-        isStarted =true;
+        isStarted = true;
     }
 
 }
