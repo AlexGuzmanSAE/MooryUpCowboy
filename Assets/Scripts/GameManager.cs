@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        RemainigTime = 60.0f;
+        RemainigTime = 5.0f;
         currentScore = 0;
         GameOverLay.gameObject.SetActive(false);
     }
@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
         //Destruir vacas
         //SpawnPosPLayer
         //reset tiempo, puntos
+        print("RESET GAME");
 
     }
 
