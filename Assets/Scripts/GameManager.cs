@@ -14,7 +14,13 @@ public class GameManager : MonoBehaviour
 
     public RectTransform GameOverLay;
     public TextMeshProUGUI scoreTxt;
-    
+
+
+    public Transform spawnPlayer;
+
+    public GameObject playerReference;
+
+    public bool isStarted;
 
     private void Awake()
     {
@@ -27,8 +33,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        RemainigTime = 5.0f;
+        RemainigTime = 60.0f;
         currentScore = 0;
+        isStarted = false;
         GameOverLay.gameObject.SetActive(false);
     }
 
@@ -45,26 +52,36 @@ public class GameManager : MonoBehaviour
 
     void SubstractTime()
     {
-        if (RemainigTime > 0)
+        if (RemainigTime > 0 && isStarted)
         {
             RemainigTime -= Time.deltaTime;
            
         }
         else
         {
-            
-            GameOverLay.gameObject.SetActive(true);
-            scoreTxt.text = string.Format("Score: {0}", currentScore);
+            ResetGame();
         }
     }
 
     public void ResetGame()
     {
-        //Destruir vacas
-        //SpawnPosPLayer
-        //reset tiempo, puntos
-        print("RESET GAME");
+        GameOverLay.gameObject.SetActive(true);
+        CowSpawner.instance.EmptyListOfCows();
+        if(playerReference != null)
+        {
+            playerReference.transform.position = spawnPlayer.position;
+        }
+        RemainigTime = 60.0f;
+        currentScore = 0;
+        UI_Manager.instance.UpdateTextScore(0);
+        isStarted = false;
 
+    }
+
+    public void StartGame()
+    {
+        GameOverLay.gameObject.SetActive(false);
+        isStarted =true;
     }
 
 }
