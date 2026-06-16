@@ -13,7 +13,9 @@ public class COW_IA : MonoBehaviour
     [SerializeField] private LayerMask detectionMask; 
     [SerializeField] private LayerMask terrainLayer; 
     [SerializeField] private float rayStartHeight = 5f; 
-    [SerializeField] private float raycastDistance = 10f; 
+    [SerializeField] private float raycastDistance = 10f;
+
+    private Rigidbody rb;
 
     public enum cowStates
     {
@@ -21,7 +23,8 @@ public class COW_IA : MonoBehaviour
         Eat,
         Moving,
         Run,
-        Grabbed
+        Grabbed,
+        Falling
     }
 
     public cowStates currentCowState;
@@ -34,28 +37,23 @@ public class COW_IA : MonoBehaviour
         {
             animator = GetComponent<Animator>();
         }
+
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
+        if(currentCowState == cowStates.Falling)
+        { 
+            rb.useGravity = true;
+            return;
+        }
+
         if (currentCowState == cowStates.Idle && !isThinking)
         {
             StartCoroutine(waitToChooseAction());
         }
     }
-
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.green;
-    //     Gizmos.DrawWireSphere(transform.position, radius);
-    //     if (collisionPoints.Count > 0)
-    //     {
-    //         foreach (GameObject pos in collisionPoints)
-    //         {
-    //             Gizmos.DrawSphere(pos.transform.position, 1.1f);
-    //         }
-    //     }
-    // }
 
     private void initialitePoints()
     {
@@ -175,5 +173,14 @@ public class COW_IA : MonoBehaviour
         GameManager.instance.AddScore();
         Debug.Log("¡Vaca abducida! +100 puntos e");
         Destroy(gameObject);
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.gameObject.CompareTag("Terrain"))
+        {
+            currentCowState = cowStates.Falling;
+        }
     }
 }

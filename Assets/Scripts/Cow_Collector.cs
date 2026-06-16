@@ -8,7 +8,7 @@ using static UnityEngine.Rendering.DebugUI.Table;
 
 public class Cow_Collector : MonoBehaviour
 {
-    [SerializeField] private int cowsCollected = 0;
+    //[SerializeField] private int cowsCollected = 0;
     public int requiredPoints = 20;
     [SerializeField] private TextMeshProUGUI scoreTxt;
 
