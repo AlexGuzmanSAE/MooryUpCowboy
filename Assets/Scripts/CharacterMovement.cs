@@ -42,8 +42,9 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        if (manoIzquierda == null || manoDerecha == null || direccionCabeza == null) return;
+        if (manoIzquierda == null || manoDerecha == null || direccionCabeza == null || !GameManager.instance.isStarted) return;
 
+      
         Vector3 posActualIzquierda = manoIzquierda.localPosition;
         Vector3 posActualDerecha = manoDerecha.localPosition;
         Vector3 deltaIzquierda = posActualIzquierda - posAnteriorIzquierda;

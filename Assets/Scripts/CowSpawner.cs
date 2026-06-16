@@ -8,8 +8,9 @@ public class CowSpawner : MonoBehaviour
     public GameObject CowPrefab;
 
     public List<Transform> cowSpawnPoints;
-    bool isSpawning;
+    public List<GameObject> cowList;
     public Transform CowParent;
+    bool isSpawning;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -42,8 +43,10 @@ public class CowSpawner : MonoBehaviour
         if (CowPrefab != null)
         {
             int choose =  Random.Range(0, cowSpawnPoints.Count);
+
         
-            Instantiate(CowPrefab, cowSpawnPoints[choose].position, Quaternion.identity,CowParent);
+            GameObject newCow = Instantiate(CowPrefab, cowSpawnPoints[choose].position, Quaternion.identity,CowParent);
+            cowList.Add(newCow);
         }
         else
         {
@@ -60,4 +63,13 @@ public class CowSpawner : MonoBehaviour
        isSpawning = false;
        
     }
+
+    public void EmptyListOfCows()
+    {
+        if (cowList.Count > 0)
+        {
+            cowList.Clear();
+        }
+    }
+
 }
