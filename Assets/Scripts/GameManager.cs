@@ -7,12 +7,13 @@ public class GameManager : MonoBehaviour
     int currentScore;
 
     //Cosas para el tiempo de la partida.
-   public float RemainigTime;
+    public float RemainigTime;
 
     //Singleton
     static public GameManager instance;
 
     public RectTransform GameOverLay;
+    public RectTransform MainMenuCanvas;
     public TextMeshProUGUI scoreTxt;
 
 
@@ -22,12 +23,16 @@ public class GameManager : MonoBehaviour
 
     public bool isStarted;
 
+    //Cosas de Menu
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else
             Destroy(this);
+
+        GameOverLay.gameObject.SetActive(false);
     }
 
 
@@ -37,7 +42,7 @@ public class GameManager : MonoBehaviour
         currentScore = 0;
         isStarted = false;
         GameOverLay.gameObject.SetActive(false);
-        StartGame();
+        MainMenuCanvas.gameObject.SetActive(true);
     }
 
     void Update()
@@ -58,8 +63,8 @@ public class GameManager : MonoBehaviour
             RemainigTime -= Time.deltaTime;
 
         }
-        else
-        {
+        else if (RemainigTime < 0 && isStarted) {
+
             End();
         }
     }
@@ -69,7 +74,9 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
 
+        MainMenuCanvas.gameObject.SetActive(false);
         GameOverLay.gameObject.SetActive(false);
+
         isStarted = true;
     }
 
@@ -92,6 +99,8 @@ public class GameManager : MonoBehaviour
         UI_Manager.instance.UpdateTextScore(0);
 
         GameOverLay.gameObject.SetActive(false);
+        MainMenuCanvas.gameObject.SetActive(false);
+
         isStarted = true;
     }
 
