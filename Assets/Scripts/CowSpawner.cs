@@ -35,7 +35,7 @@ public class CowSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isSpawning)
+        if (!isSpawning && GameManager.instance.isStarted)
         {
             StartCoroutine(AwaitToSpawnCow());
         }
