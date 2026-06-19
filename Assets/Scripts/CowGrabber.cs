@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -30,6 +31,9 @@ public class CowGrabber : MonoBehaviour
     public SoundData controlTrigger_SD;
     public SoundData cowHit_SD;
     public SoundData scoreSD;
+
+
+    public Action triggerRelease;
 
     void OnEnable()
     {
@@ -66,11 +70,20 @@ public class CowGrabber : MonoBehaviour
         if (grabbedCow != null)
         {
             grabbedCow.transform.SetParent(null);
-            grabbedCow.currentCowState = COW_IA.cowStates.Idle;
+            grabbedCow.currentCowState = COW_IA.cowStates.Falling;
+
+            Rigidbody cowRb = grabbedCow.GetComponent<Rigidbody>();
+            if (cowRb != null)
+            {
+                cowRb.isKinematic = false;
+                cowRb.useGravity = true;
+            }
+
             grabbedCow = null;
         }
 
         UpdateLineRenderer(false, Vector3.zero);
+        triggerRelease?.Invoke();
     }
 
     void Update()
@@ -109,7 +122,7 @@ public class CowGrabber : MonoBehaviour
 
                 COW_IA targetCow = hit.collider.GetComponent<COW_IA>();
 
-                  if (targetCow != null && targetCow.currentCowState != COW_IA.cowStates.Grabbed)
+                if (targetCow != null && targetCow.currentCowState != COW_IA.cowStates.Grabbed)
                 {
                     SoundManager.Instance.CreateSound().WithSoundData(cowHit_SD).WithRandomPitch().Play();
                     grabbedCow = targetCow;

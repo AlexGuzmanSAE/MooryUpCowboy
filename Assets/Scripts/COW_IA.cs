@@ -1,7 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class COW_IA : MonoBehaviour
 {
@@ -9,11 +10,14 @@ public class COW_IA : MonoBehaviour
     public List<GameObject> collisionPoints = new List<GameObject>();
     public Animator animator;
     public float radius;
-    
-    [SerializeField] private LayerMask detectionMask; 
-    [SerializeField] private LayerMask terrainLayer; 
-    [SerializeField] private float rayStartHeight = 5f; 
-    [SerializeField] private float raycastDistance = 10f; 
+
+    [SerializeField] private LayerMask detectionMask;
+    [SerializeField] private LayerMask terrainLayer;
+    [SerializeField] private float rayStartHeight = 5f;
+    [SerializeField] private float raycastDistance = 10f;
+
+    private Rigidbody rb;
+    public CowGrabber cGrabber;
 
     public enum cowStates
     {
@@ -21,7 +25,8 @@ public class COW_IA : MonoBehaviour
         Eat,
         Moving,
         Run,
-        Grabbed
+        Grabbed,
+        Falling
     }
 
     public cowStates currentCowState;
@@ -34,6 +39,8 @@ public class COW_IA : MonoBehaviour
         {
             animator = GetComponent<Animator>();
         }
+
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -43,19 +50,6 @@ public class COW_IA : MonoBehaviour
             StartCoroutine(waitToChooseAction());
         }
     }
-
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.green;
-    //     Gizmos.DrawWireSphere(transform.position, radius);
-    //     if (collisionPoints.Count > 0)
-    //     {
-    //         foreach (GameObject pos in collisionPoints)
-    //         {
-    //             Gizmos.DrawSphere(pos.transform.position, 1.1f);
-    //         }
-    //     }
-    // }
 
     private void initialitePoints()
     {
@@ -70,18 +64,17 @@ public class COW_IA : MonoBehaviour
                 Mathf.Cos(angle * Mathf.Deg2Rad) * radius
             );
             Vector3 spawnPos = currentPos + spawnOffset;
-            
+
             Vector3 rayOrigin = new Vector3(spawnPos.x, spawnPos.y + rayStartHeight, spawnPos.z);
-            
+
             if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, raycastDistance, detectionMask))
             {
-
                 if (((1 << hit.collider.gameObject.layer) & terrainLayer) != 0)
                 {
-                    GameObject newPoint = Instantiate(prefabForPoints, hit.point, rot,this.transform);
+                    GameObject newPoint = Instantiate(prefabForPoints, hit.point, rot, this.transform);
                     if (newPoint.TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
                     {
-                        meshRenderer.enabled = false; 
+                        meshRenderer.enabled = false;
                     }
                     collisionPoints.Add(newPoint);
                 }
@@ -132,6 +125,7 @@ public class COW_IA : MonoBehaviour
 
             MovePointsCow();
             currentCowState = cowStates.Idle;
+            rb.useGravity = true;
             animator.SetBool("IsWalking", false);
         });
     }
@@ -162,18 +156,46 @@ public class COW_IA : MonoBehaviour
     {
         currentCowState = cowStates.Grabbed;
         StopAllCoroutines();
+        isThinking = false;
         this.transform.DOKill();
 
         animator.SetBool("IsWalking", false);
         animator.SetBool("IsEating", false);
 
+        rb.isKinematic = true;
+        rb.useGravity = false;
+
         transform.SetParent(controllerTransform, true);
+    }
+
+    public void ReleaseCow()
+    {
+        currentCowState = cowStates.Falling;
+        transform.SetParent(null);
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
     }
 
     public void DestroyCow()
     {
         GameManager.instance.AddScore();
-        Debug.Log("¡Vaca abducida! +100 puntos e");
+        Debug.Log("¡Vaca abducida! +100 puntos");
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Terrain"))
+        {
+            if (currentCowState == cowStates.Falling)
+            {
+                currentCowState = cowStates.Idle;
+                rb.isKinematic = false;
+                rb.useGravity = true;
+            }
+        }
+
+
     }
 }
