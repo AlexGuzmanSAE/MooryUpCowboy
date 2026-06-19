@@ -1,5 +1,7 @@
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class GameManager : MonoBehaviour
     public RectTransform GameOverLay;
     public RectTransform MainMenuCanvas;
     public TextMeshProUGUI scoreTxt;
+    public Slider TimeSlider;
 
 
     public Transform spawnPlayer;
@@ -22,6 +25,9 @@ public class GameManager : MonoBehaviour
     public GameObject playerReference;
 
     public bool isStarted;
+    
+    [CanBeNull] public SoundData BG_Music;
+    
 
     //Cosas de Menu
 
@@ -43,6 +49,7 @@ public class GameManager : MonoBehaviour
         isStarted = false;
         GameOverLay.gameObject.SetActive(false);
         MainMenuCanvas.gameObject.SetActive(true);
+     
     }
 
     void Update()
@@ -61,6 +68,10 @@ public class GameManager : MonoBehaviour
         if (RemainigTime > 0 && isStarted)
         {
             RemainigTime -= Time.deltaTime;
+            if (TimeSlider != null)
+            {
+                TimeSlider.value = RemainigTime;
+            }
 
         }
         else if (RemainigTime < 0 && isStarted) {
@@ -78,9 +89,11 @@ public class GameManager : MonoBehaviour
         GameOverLay.gameObject.SetActive(false);
 
         isStarted = true;
+        if(BG_Music != null && SoundManager.Instance)
+            SoundManager.Instance.CreateSound().WithSoundData(BG_Music).Play();
     }
 
-    public void End()
+    private void End()
     {
         HighScore();
         GameOverLay.gameObject.SetActive(true);
@@ -105,7 +118,7 @@ public class GameManager : MonoBehaviour
         isStarted = true;
     }
 
-    public void HighScore()
+    private void HighScore()
     {
         int highScore = PlayerPrefs.GetInt("HighScore", 0);
         if (currentScore > highScore)

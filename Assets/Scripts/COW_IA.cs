@@ -41,6 +41,7 @@ public class COW_IA : MonoBehaviour
         }
 
         rb = GetComponent<Rigidbody>();
+        
     }
 
     void Update()
