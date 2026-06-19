@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
 
     public void End()
     {
+        HighScore();
         GameOverLay.gameObject.SetActive(true);
         isStarted = false;
     }
@@ -93,6 +94,17 @@ public class GameManager : MonoBehaviour
 
         GameOverLay.gameObject.SetActive(false);
         isStarted = true;
+    }
+
+    public void HighScore()
+    {
+        int highScore = PlayerPrefs.GetInt("HighScore", 0);
+        if (currentScore > highScore)
+        {
+            PlayerPrefs.SetInt("HighScore", currentScore);
+            PlayerPrefs.Save();
+            scoreTxt.text = currentScore.ToString();
+        }
     }
 
 }
